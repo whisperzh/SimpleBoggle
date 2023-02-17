@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bignerdranch.android.simpleboggle.databinding.FragmentLowerBinding
+import com.bignerdranch.android.simpleboggle.databinding.FragmentUpperBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,7 +22,8 @@ class LowerFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var binding: FragmentLowerBinding ?=null
+    private lateinit var communicator: Communicator
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -34,7 +37,14 @@ class LowerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        binding= FragmentLowerBinding.inflate(layoutInflater,container,false);
         return inflater.inflate(R.layout.fragment_lower, container, false)
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding=null
     }
 
     companion object {
