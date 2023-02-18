@@ -39,7 +39,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/new_game_button"
+                android:id="@+id/newGameButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center_vertical"

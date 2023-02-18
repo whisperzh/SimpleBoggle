@@ -2,8 +2,9 @@ package com.bignerdranch.android.simpleboggle
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 
-class MainActivity : AppCompatActivity(),Communicator {
+class MainActivity : AppCompatActivity(),ActivityCallback {
 
     private var score:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,11 +14,11 @@ class MainActivity : AppCompatActivity(),Communicator {
 
     override fun passScore(score: Int) {
         this.score=score
-
+        Log.d(this.localClassName,score.toString())
         TODO("Not yet implemented")
     }
 
     override fun passCommand(command: String) {
-        TODO("Not yet implemented")
+        Log.d(this.localClassName,command)
     }
 }

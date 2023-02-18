@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bignerdranch.android.simpleboggle.databinding.FragmentLowerBinding
 import com.bignerdranch.android.simpleboggle.databinding.FragmentUpperBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +22,7 @@ class UpperFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var binding:FragmentUpperBinding
-    private lateinit var communicator: Communicator
+    private lateinit var activityCallback: ActivityCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

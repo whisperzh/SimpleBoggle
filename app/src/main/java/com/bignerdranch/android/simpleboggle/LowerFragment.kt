@@ -1,12 +1,12 @@
 package com.bignerdranch.android.simpleboggle
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bignerdranch.android.simpleboggle.databinding.FragmentLowerBinding
-import com.bignerdranch.android.simpleboggle.databinding.FragmentUpperBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +23,7 @@ class LowerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var binding: FragmentLowerBinding ?=null
-    private lateinit var communicator: Communicator
+    private lateinit var activityCallback: ActivityCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -37,14 +37,31 @@ class LowerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding= FragmentLowerBinding.inflate(layoutInflater,container,false);
-        return inflater.inflate(R.layout.fragment_lower, container, false)
+        binding = FragmentLowerBinding.inflate(inflater,container,false);
+        binding!!.newGameButton.setOnClickListener {
+            newGame()
+        }
+        val view = binding!!.root
+        return view
+//        return inflater.inflate(R.layout.fragment_lower, container, false)
     }
 
+    override fun onAttach(activity: Activity) {
+        super.onAttach(activity)
+        activityCallback=activity as ActivityCallback
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding=null
+    }
+
+    /**
+     * new game button will use this function
+     */
+    fun newGame(){
+        binding!!.scoreText.setText("0");
+        activityCallback.passCommand("GAME_RESET")
     }
 
     companion object {
