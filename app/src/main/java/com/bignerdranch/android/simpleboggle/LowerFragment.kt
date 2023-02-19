@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bignerdranch.android.simpleboggle.databinding.FragmentLowerBinding
+import com.bignerdranch.android.simpleboggle.interfaces.ActivityCallback
+import com.bignerdranch.android.simpleboggle.interfaces.LowerFragmentCallback
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,11 +20,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LowerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LowerFragment : Fragment() {
+class LowerFragment : Fragment() , LowerFragmentCallback{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var binding: FragmentLowerBinding ?=null
+    private lateinit var binding: FragmentLowerBinding
     private lateinit var activityCallback: ActivityCallback
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +40,10 @@ class LowerFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLowerBinding.inflate(inflater,container,false);
-        binding!!.newGameButton.setOnClickListener {
+        binding.newGameButton.setOnClickListener {
             newGame()
         }
-        val view = binding!!.root
+        val view = binding.root
         return view
 //        return inflater.inflate(R.layout.fragment_lower, container, false)
     }
@@ -53,15 +55,14 @@ class LowerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding=null
     }
 
     /**
      * new game button will use this function
      */
     fun newGame(){
-        binding!!.scoreText.setText("0");
-        activityCallback.passCommand("GAME_RESET")
+        binding.scoreText.setText("0");
+        activityCallback.resetGame()
     }
 
     companion object {
@@ -82,5 +83,9 @@ class LowerFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun updateScoreText(score:Int) {
+        binding!!.scoreText.setText(score.toString())
     }
 }
