@@ -41,7 +41,6 @@ class LowerFragment : Fragment() , LowerFragmentCallback{
         // Inflate the layout for this fragment
         binding = FragmentLowerBinding.inflate(inflater,container,false);
         binding.newGameButton.setOnClickListener {
-            newGame()
         }
         val view = binding.root
         return view
