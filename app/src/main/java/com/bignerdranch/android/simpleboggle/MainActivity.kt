@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         score=0;
         upperFragmentCallback.clearResultText()
         upperFragmentCallback.randomizeCharacters()
+        upperFragmentCallback.resetButtonsColor()
     }
 
     override fun passCommand(command: String) {

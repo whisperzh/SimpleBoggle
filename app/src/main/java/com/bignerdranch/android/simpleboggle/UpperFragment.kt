@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TableRow
+import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.bignerdranch.android.simpleboggle.Utils.Util
@@ -30,9 +31,11 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
     private var param2: String? = null
     private lateinit var binding:FragmentUpperBinding
     private lateinit var activityCallback: ActivityCallback
-
     private lateinit var util:Util
 
+    private var pressed=mutableSetOf<String>()
+    private var lastrow:Int=-1
+    private var lastcol:Int=-1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -70,9 +73,21 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
             {
                 var button=view.get(j) as Button
                 button.setOnClickListener {
-                    var str=binding.resultText.text.toString()
-                    str+=button.text.toString()
-                    binding.resultText.setText(str) }
+                    var arr=getButtonIndex(button)
+                    if(validClick(arr))
+                    {
+                        var str=binding.resultText.text.toString()
+                        str+=button.text.toString()
+                        button.setBackgroundColor(getResources().getColor(R.color.gray))
+                        binding.resultText.setText(str)
+                        lastrow=arr[0]
+                        lastcol=arr[1]
+                        pressed.add(arr[0].toString()+"_"+arr[1].toString())
+                    }else
+                    {
+                        Toast.makeText(context, "your selection is invalid", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -86,6 +101,49 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
                 button.setText(util.getRandomCharacter().toString())
             }
         }
+    }
+
+    override fun resetButtonsColor() {
+        for(i in 0 until  4)
+        {
+            val view = binding.buttonContainer.getChildAt(i) as TableRow
+            for(j in 0 until 4)
+            {
+                var button=view.get(j) as Button
+                button.setBackgroundColor(getResources().getColor(R.color.purple_200))
+            }
+        }
+        pressed.clear()
+        lastrow=-1;
+        lastcol=-1
+    }
+
+    private fun getButtonIndex(tgt_button: Button):Array<Int>
+    {
+        for(i in 0 until  4)
+        {
+            val view = binding.buttonContainer.getChildAt(i) as TableRow
+            for(j in 0 until 4)
+            {
+                var button=view.get(j) as Button
+                if(button.equals(tgt_button))
+                {
+                    return arrayOf(i,j);
+                }
+
+            }
+        }
+        return Array(2){-1};
+    }
+
+    private fun validClick(currCord:Array<Int>):Boolean{
+        if(lastcol==-1&&lastrow==-1)
+            return true
+        var coordstr=currCord[0].toString()+"_"+currCord[1].toString()
+        if(!(currCord[0]==lastrow && currCord[1]==lastcol) &&
+                (Math.abs(currCord[0]-lastrow)<=1 && Math.abs(currCord[1]-lastcol)<=1)&&!pressed.contains(coordstr))
+            return true
+        return false
     }
 
 
@@ -111,5 +169,10 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
 
     override fun clearResultText() {
         binding.resultText.setText("")
+        pressed.clear()
+        lastrow=-1;
+        lastcol=-1
+        resetButtonsColor()
+
     }
 }
