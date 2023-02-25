@@ -27,12 +27,8 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding.root)
-        val url = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt"
-        val filename = "dictionary.txt"
         fileManager = FileManager()
-        fileManager.downloadFile(url, filename, this)
-        dictionary = fileManager.makeTxtFileIntoHashSet(filename)
-
+        dictionary = fileManager.readFileFromAssetManager("words.txt",this)
     }
 
     private fun getFragments(){

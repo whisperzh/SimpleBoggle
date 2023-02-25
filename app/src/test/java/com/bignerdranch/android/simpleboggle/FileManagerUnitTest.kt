@@ -14,4 +14,5 @@ class FileManagerUnitTest {
     fun canCreateAHashSetDictionaryFromURL(){
         assertNotNull(fileManager.createDictionaryFromURL(dictionaryUrl))
     }
+
 }
