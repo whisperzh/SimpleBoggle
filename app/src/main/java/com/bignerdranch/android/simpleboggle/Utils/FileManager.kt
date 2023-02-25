@@ -3,42 +3,30 @@ package com.bignerdranch.android.simpleboggle.Utils
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Context.DOWNLOAD_SERVICE
+import android.content.res.AssetManager
 import android.net.Uri
 import android.os.Environment
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileReader
-import java.io.InputStreamReader
+import java.io.*
 import java.net.URL
-
 
 class FileManager {
 
-     fun downloadFile(url: String, filename: String, context: Context) {
-        val request = DownloadManager.Request(Uri.parse(url))
-        request.setTitle("Download")
-        request.setDescription("Downloading $filename")
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setAllowedOverMetered(true)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename)
-
-        val dm = context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
-        dm.enqueue(request)
-    }
-
-    fun makeTxtFileIntoHashSet(filename: String): HashSet<String> {
-        val file = getFile(filename)
-        if (file.exists()){
+    fun readFileFromAssetManager(filename: String, context: Context): HashSet<String>{
+        try{
+            val assetManager: AssetManager = context.assets
+            val inputStream: InputStream = assetManager.open(filename) // replace "example.txt" with the name of your file
+            val bufferedReader = BufferedReader(InputStreamReader(inputStream))
             val hashSet = hashSetOf<String>()
-            file.bufferedReader().useLines {
-                lines -> lines.forEach {
+            bufferedReader.useLines { lines ->
+                lines.forEach {
                     hashSet.add(it)
                 }
             }
             return hashSet
-        }else{
+        }catch (e: IOError){
             return hashSetOf<String>()
         }
+
     }
 
     fun getFile(filename: String): File{
