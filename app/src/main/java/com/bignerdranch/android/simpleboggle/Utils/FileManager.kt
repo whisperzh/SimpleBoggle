@@ -8,6 +8,8 @@ import android.os.Environment
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import java.io.InputStreamReader
+import java.net.URL
 
 
 class FileManager {
@@ -41,6 +43,19 @@ class FileManager {
 
     fun getFile(filename: String): File{
         return File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename)
+    }
+
+
+    fun createDictionaryFromURL(url: String): HashSet<String>{
+        val downloadedUrl = URL(url)
+        val bufferedReader = downloadedUrl.openStream().bufferedReader()
+        var dic = HashSet<String>()
+        bufferedReader.useLines { lines ->
+            lines.forEach {
+                dic.add(it)
+            }
+        }
+        return dic
     }
 
 }

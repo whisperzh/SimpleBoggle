@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         binding= ActivityMainBinding.inflate(layoutInflater);
         setContentView(binding.root)
         val url = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt"
-
         val filename = "dictionary.txt"
         fileManager = FileManager()
         fileManager.downloadFile(url, filename, this)
