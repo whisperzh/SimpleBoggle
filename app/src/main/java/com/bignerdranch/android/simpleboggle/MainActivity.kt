@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.bignerdranch.android.simpleboggle.Utils.FileManager
+import com.bignerdranch.android.simpleboggle.Utils.PointCalculator
+import com.bignerdranch.android.simpleboggle.Utils.WordDetector
 import com.bignerdranch.android.simpleboggle.databinding.ActivityMainBinding
 import com.bignerdranch.android.simpleboggle.interfaces.ActivityCallback
 import com.bignerdranch.android.simpleboggle.interfaces.LowerFragmentCallback
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
     private lateinit var upperFragmentCallback: UpperFragmentCallback
 
     private lateinit var fileManager: FileManager
+
+    private var previousWordResults:MutableSet<String> = mutableSetOf<String>()
 
     private lateinit var dictionary: HashSet<String>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,9 +56,26 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         upperFragmentCallback.clearResultText()
         upperFragmentCallback.randomizeCharacters()
         upperFragmentCallback.resetButtonsColor()
+        previousWordResults.clear()
     }
 
-    override fun passCommand(command: String) {
-        Log.d(this.localClassName,command)
+    override fun checkWord(word: String) {
+        getFragments()
+        var checker= WordDetector()
+        var res=checker.detectWord(word, previousWordResults )
+        val points=PointCalculator().calculateScore(dictionary,word)
+        var success=res.get(200)
+        if(success!=null)
+        {
+            Toast.makeText(this, success, Toast.LENGTH_SHORT).show()
+
+        }else
+        {
+            Toast.makeText(this, res.get(400), Toast.LENGTH_SHORT).show()
+        }
+        if(points>0)
+            previousWordResults.add(word)
+        score+=points
+        lowerFragmentCallback.updateScoreText(score)
     }
 }

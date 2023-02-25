@@ -16,7 +16,7 @@ class PointCalculator {
         }
     }
 
-    fun calculateAWordPoints(word: String):Int{
+    private fun calculateAWordPoints(word: String):Int{
         var doubleScoreDecision = 1
         var wordTotalPoint = 0
         val doubleScoreConsonants = mutableSetOf<Char>('S','Z','P','X','Q')
@@ -34,7 +34,7 @@ class PointCalculator {
         return wordTotalPoint*doubleScoreDecision
     }
 
-    fun checkWordIsInDictionary(dic: HashSet<String>,word: String):Boolean{
+    private fun checkWordIsInDictionary(dic: HashSet<String>,word: String):Boolean{
         return dic.contains(word)
     }
 

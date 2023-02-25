@@ -10,7 +10,9 @@ import android.widget.TableRow
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import com.bignerdranch.android.simpleboggle.Utils.PointCalculator
 import com.bignerdranch.android.simpleboggle.Utils.Util
+import com.bignerdranch.android.simpleboggle.Utils.WordDetector
 import com.bignerdranch.android.simpleboggle.databinding.FragmentUpperBinding
 import com.bignerdranch.android.simpleboggle.interfaces.ActivityCallback
 import com.bignerdranch.android.simpleboggle.interfaces.UpperFragmentCallback
@@ -32,6 +34,8 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
     private lateinit var binding:FragmentUpperBinding
     private lateinit var activityCallback: ActivityCallback
     private lateinit var util:Util
+
+
 
     private var pressed=mutableSetOf<String>()
     private var lastrow:Int=-1
@@ -90,6 +94,9 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
                 }
             }
         }
+        binding.submitButton.setOnClickListener {
+            activityCallback.checkWord(binding.resultText.text.toString())
+        }
     }
     override fun randomizeCharacters(){
         for(i in 0 until  4)
@@ -102,6 +109,8 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
             }
         }
     }
+
+
 
     override fun resetButtonsColor() {
         for(i in 0 until  4)
