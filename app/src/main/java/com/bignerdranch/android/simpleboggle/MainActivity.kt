@@ -63,15 +63,16 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         getFragments()
         var checker= WordDetector()
         var res=checker.detectWord(word, previousWordResults )
-        val points=PointCalculator().calculateScore(dictionary,word)
+        var points=0
         var success=res.get(200)
         if(success!=null)
         {
             Toast.makeText(this, success, Toast.LENGTH_SHORT).show()
-
+            points=PointCalculator().calculateScore(dictionary,word)
         }else
         {
             Toast.makeText(this, res.get(400), Toast.LENGTH_SHORT).show()
+            points=-10
         }
         if(points>0)
             previousWordResults.add(word)
