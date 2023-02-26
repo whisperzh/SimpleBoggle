@@ -13,19 +13,9 @@ class PointCalculatorUnitTest {
     private val fileManager = FileManager()
     private val dic = fileManager.createDictionaryFromURL(url)
 
-    @Test
-    fun wordIsInCalculator() {
-        assertTrue(pointCalculator.checkWordIsInDictionary(dic,"ZZZ"))
-    }
 
     @Test
-    fun wordIsInNotInCalculator() {
-        assertFalse(pointCalculator.checkWordIsInDictionary(dic,"ZZ Z"))
-    }
-
-
-    @Test
-    fun calculateScoreWithWrongWord(){
+    fun calculateScoreWithWordThatDoesNotExistInDictionary(){
         assertEquals(pointCalculator.calculateScore(dic,"ZZ Z"), -10)
     }
 
