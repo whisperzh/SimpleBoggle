@@ -10,9 +10,7 @@ import android.widget.TableRow
 import android.widget.Toast
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import com.bignerdranch.android.simpleboggle.Utils.PointCalculator
 import com.bignerdranch.android.simpleboggle.Utils.Util
-import com.bignerdranch.android.simpleboggle.Utils.WordDetector
 import com.bignerdranch.android.simpleboggle.databinding.FragmentUpperBinding
 import com.bignerdranch.android.simpleboggle.interfaces.ActivityCallback
 import com.bignerdranch.android.simpleboggle.interfaces.UpperFragmentCallback
@@ -82,7 +80,9 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
                     {
                         var str=binding.resultText.text.toString()
                         str+=button.text.toString()
-                        button.setBackgroundColor(getResources().getColor(R.color.gray))
+//                        button.setBackgroundColor(getResources().getColor(R.color.gray))
+                        button.isEnabled=false
+                        button.isClickable=false
                         binding.resultText.setText(str)
                         lastrow=arr[0]
                         lastcol=arr[1]
@@ -112,14 +112,15 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
 
 
 
-    override fun resetButtonsColor() {
+    override fun resetButtonsAvailability() {
         for(i in 0 until  4)
         {
             val view = binding.buttonContainer.getChildAt(i) as TableRow
             for(j in 0 until 4)
             {
                 var button=view.get(j) as Button
-                button.setBackgroundColor(getResources().getColor(R.color.purple_200))
+                button.isClickable=true
+                button.isEnabled=true
             }
         }
         pressed.clear()
@@ -181,7 +182,7 @@ class UpperFragment : Fragment() ,UpperFragmentCallback{
         pressed.clear()
         lastrow=-1;
         lastcol=-1
-        resetButtonsColor()
+        resetButtonsAvailability()
 
     }
 }

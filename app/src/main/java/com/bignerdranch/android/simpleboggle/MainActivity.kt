@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), ActivityCallback {
         score=0;
         upperFragmentCallback.clearResultText()
         upperFragmentCallback.randomizeCharacters()
-        upperFragmentCallback.resetButtonsColor()
+        upperFragmentCallback.resetButtonsAvailability()
         previousWordResults.clear()
     }
 
